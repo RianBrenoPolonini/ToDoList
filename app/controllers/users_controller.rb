@@ -23,14 +23,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     
-    @user.email.downcase!
-    
-      if @user.save
-        flash[:success] = 'Usuário cadastrado com sucesso!'
-        redirect_to root_url
-      else
-        render 'new'
-      end
+    if @user.save
+      flash[:success] = 'Usuário cadastrado com sucesso!'
+      redirect_to root_url
+    else
+      render 'new'
+    end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
