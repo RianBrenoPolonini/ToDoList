@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :lists
   resources :users
 
+  resources :lists, :has_many => :tasks
+
   root to: "sessions#new"
 
   get 'cadastro' , to: "users#new"

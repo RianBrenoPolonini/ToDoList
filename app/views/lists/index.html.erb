@@ -1,29 +1,24 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Lists</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @lists.each do |list| %>
-      <tr>
-        <td><%= list.name %></td>
-        <td><%= list.user_id %></td>
-        <td><%= link_to 'Show', list %></td>
-        <td><%= link_to 'Edit', edit_list_path(list) %></td>
-        <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New List', new_list_path %>
+<div class="row mx-auto justify-content-center align-items-center"  style="margin-top: 7%">
+  <div class="col-xs-12 text-center">
+    <h1>Minhas listas</h1>
+  </div>
+  <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="list-group">
+    <%= if current_user.lists.length >= 5
+          link_to 'Atingiu o número maximo', '#', class: 'btn btn-info'
+        else
+          link_to 'Nova Lista', new_list_path(current_user), class: 'btn btn-success'     
+    end%>
+      <ul class="list-group">
+      <% @lists.each do |c| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center" style='margin-top: 10px'>
+            <a href="#" class="list-group-item list-group-item-action"><%= c.name %></a>
+            <%= link_to 'Editar', edit_list_path(c), class: 'btn btn-warning' %>
+            <%= link_to 'Excluir', c, method: :delete, class: 'btn btn-danger', data: { confirm: 'Tem certeza que deseja excluir?'} %>
+            <span class="badge badge-secondary badge-pill">14</span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

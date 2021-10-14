@@ -21,9 +21,16 @@ module SessionsHelper
         end
     end
 
-    
+    # Vericica se tem algum usuario logado
     def user_signed_in?
         !current_user.nil?
     end
 
+    # Se não tiver nenhum usuario logado, redireciona para o root
+    def authorize
+        unless user_signed_in?
+            flash[:danger] = 'Acesso negado!'
+            redirect_to root_url
+        end
+    end
 end

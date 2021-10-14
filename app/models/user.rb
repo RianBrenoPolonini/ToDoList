@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+    has_many :lists
+    has_many :tasks
     has_secure_password
 
     VALID_EMAIL_FORMAT = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i

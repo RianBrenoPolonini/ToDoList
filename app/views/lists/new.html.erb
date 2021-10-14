@@ -1,5 +1,15 @@
-<h1>New List</h1>
-
-<%= render 'form', list: @list %>
-
-<%= link_to 'Back', lists_path %>
+<div class="row mx-auto justify-content-center align-items-center"  style="margin-top: 7%">
+  <div class="col-md-6 col-md-offset-3 col-xs-12">
+    <div class="col-xs-12">
+      <h1>Nova Lista</h1>
+    </div>
+    <%= form_for @list do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <br>
+    <%= f.submit 'Criar', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
