@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-  
-  resources :lists
-  resources :users
+ 
+  root to: "sessions#new"
 
+  resources :users
   resources :lists do
     resources :tasks
   end
 
-  root to: "sessions#new"
-
+  get 'sessions/new'
   get 'cadastro' , to: "users#new"
   get 'entrar', to: 'sessions#new'
   post 'entrar', to: 'sessions#create'

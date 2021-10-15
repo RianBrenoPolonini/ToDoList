@@ -9,10 +9,6 @@ class ListsController < ApplicationController
     @lists = current_user.lists
   end
 
-  # GET /lists/1 or /lists/1.json
-  def show
-  end
-
   # GET /lists/new
   def new
     @list = List.new
@@ -51,6 +47,7 @@ class ListsController < ApplicationController
 
   # DELETE /lists/1 or /lists/1.json
   def destroy
+    @tasks = current_user.tasks.where(list_id: params[:id]).destroy_all
     @list.destroy
     flash[:success] = 'Lista apagada com sucesso!'
     redirect_to lists_path

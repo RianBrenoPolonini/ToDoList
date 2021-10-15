@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   
   before_action :authorize
   # before_action :set_list
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit update destroy status]
   
   # GET /tasks or /tasks.json
   def index
@@ -37,30 +37,25 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      flash[:success] = 'Lista alterada com sucesso!'
+      redirect_to list_tasks_path
+    else
+      render 'new'
     end
   end
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    flash[:success] = 'Tarefa apagada com sucesso!'
+    redirect_to list_tasks_path
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find_by(id: params[:id])
     end
 
     # Only allow a list of trusted parameters through.

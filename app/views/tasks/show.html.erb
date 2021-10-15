@@ -16,13 +16,18 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @task.user_id %>
+  <strong>Tarefa Criada:</strong>
+  <%= @task.created_at.strftime("%d/%m/%Y %H:%M") %>
 </p>
 
 <p>
-  <strong>List:</strong>
-  <%= @task.list_id %>
+  <strong>Ultima atualização da Tarefa:</strong>
+  <%= @task.updated_at.strftime("%d/%m/%Y %H:%M") %>
+</p>
+
+<p>
+  <strong>Tarefa da lista:</strong>
+  <%= List.find(@task.list_id).name %>
 </p>
 
 <%= link_to 'Voltar', list_tasks_path %>
