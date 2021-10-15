@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_10_13_183154) do
     t.boolean "is_valid", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email"
   end
 
   add_foreign_key "lists", "users"
