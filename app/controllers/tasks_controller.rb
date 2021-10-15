@@ -2,11 +2,12 @@ class TasksController < ApplicationController
   include SessionsHelper
   
   before_action :authorize
+  # before_action :set_list
   before_action :set_task, only: %i[ show edit update destroy ]
   
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks.where(list_id: params[:list_id])
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -24,16 +25,13 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    @task = current_user.tasks.build(task_params)
+    @task.list_id = params[:list_id]
+    if @task.save
+      flash[:success] = 'Tarefa cadastrada com sucesso!'
+      redirect_to list_tasks_path
+    else
+      render 'new'
     end
   end
 
@@ -67,6 +65,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:name, :description, :status, :user_id, :list_id)
+      params.require(:task).permit(:name, :description, :status, :list_id)
     end
 end

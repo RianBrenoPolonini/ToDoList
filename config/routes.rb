@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   get 'sessions/new'
-  resources :tasks
+  
   resources :lists
   resources :users
 
-  resources :lists, :has_many => :tasks
+  resources :lists do
+    resources :tasks
+  end
 
   root to: "sessions#new"
 

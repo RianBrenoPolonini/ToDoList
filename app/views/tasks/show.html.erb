@@ -1,17 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Nome:</strong>
   <%= @task.name %>
 </p>
 
 <p>
-  <strong>Description:</strong>
+  <strong>Descrição:</strong>
   <%= @task.description %>
 </p>
 
 <p>
-  <strong>Status:</strong>
+  <strong>Foi feita:</strong>
   <%= @task.status %>
 </p>
 
@@ -25,5 +25,4 @@
   <%= @task.list_id %>
 </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to 'Voltar', list_tasks_path %>
