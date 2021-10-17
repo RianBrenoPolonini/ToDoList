@@ -4,11 +4,11 @@
         <%= form_for @task, url: list_tasks_path do |f| %>
             <%= render 'layouts/error_messages', object: f.object %>
             <div class="form-group">
-                <%= f.label :name %>
+                <%= f.label 'Nome' %>
                 <%= f.text_field :name, class: 'form-control' %>
             </div>
             <div class="form-group">
-                <%= f.label :description %>
+                <%= f.label 'Descrição' %>
                 <%= f.text_field :description, class: 'form-control' %>
             </div>
             <br>
