@@ -2,8 +2,7 @@ class TasksController < ApplicationController
   include SessionsHelper
   
   before_action :authorize
-  # before_action :set_list
-  before_action :set_task, only: %i[ show edit update destroy status]
+  before_action :set_task, only: %i[ show edit update destroy ]
   
   # GET /tasks or /tasks.json
   def index
@@ -27,6 +26,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     @task.list_id = params[:list_id]
+    @task.status = false
     if @task.save
       flash[:success] = 'Tarefa cadastrada com sucesso!'
       redirect_to list_tasks_path
@@ -38,11 +38,19 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     if @task.update(task_params)
-      flash[:success] = 'Lista alterada com sucesso!'
+      flash[:success] = 'Tarefa alterada com sucesso!'
       redirect_to list_tasks_path
     else
       render 'new'
     end
+  end
+
+  def update_status
+    task = current_user.tasks.find(params[:id])
+    task.status = true
+    task.save
+    flash[:success] = 'Tarefa feita!'
+    redirect_to list_tasks_path(task.list_id)
   end
 
   # DELETE /tasks/1 or /tasks/1.json

@@ -3,17 +3,34 @@
     <h1>Minhas Tarefas</h1>
   </div>
   <div class="col-md-8 col-md-offset-2 col-xs-12">
+  
     <div class="list-group">
       <%= link_to 'Nova Tarefa', new_list_task_path, class: 'btn btn-success' %>
       <ul class="list-group">
-        <% @tasks.each do |task| %>
-          <li class="list-group-item d-flex justify-content-between align-items-center" style='margin-top: 10px'>
-            <%= link_to task.name,list_task_path(task.list_id, task),  class: 'list-group-item list-group-item-action' %>
-            <%= if task.status 
-            'Feito' 
-            else 
-            'Não feito' 
-            end %>
+      <div class="accordion accordion-flush" id="accordionFlushExample" style="margin-top: 5px">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              Tarefas Feitas
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <% @tasks.where(status: true).each do |task| %>
+                <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center" style='margin-top: 10px'>
+                  <%= link_to task.name, list_task_path(task.list_id, task),  class: 'list-group-item list-group-item-action' %>
+                  <%= link_to 'Editar', edit_list_task_path(task.list_id, task), class: 'btn btn-warning' %>
+                  <%= link_to 'Excluir', list_task_path(task.list_id, task), method: :delete, class: 'btn btn-danger', data: { confirm: 'Tem certeza que deseja excluir?'} %>
+                </li>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+        <% @tasks.where(status: false).each do |task| %>
+          <li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" style='margin-top: 10px'>
+            <%= link_to task.name, list_task_path(task.list_id, task),  class: 'list-group-item list-group-item-action' %>
+            <%= link_to 'Feito', update_status_path(task),method: :post,  class: 'btn btn-success'%>
             <%= link_to 'Editar', edit_list_task_path(task.list_id, task), class: 'btn btn-warning' %>
             <%= link_to 'Excluir', list_task_path(task.list_id, task), method: :delete, class: 'btn btn-danger', data: { confirm: 'Tem certeza que deseja excluir?'} %>
           </li>

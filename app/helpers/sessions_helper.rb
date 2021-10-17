@@ -15,6 +15,7 @@ module SessionsHelper
         @current_user ||= User.find_by(id: session[:user_id])
     end
 
+    # Redireciona User logado para a pagina dele
     def block_access
         if current_user.present?
             redirect_to users_path

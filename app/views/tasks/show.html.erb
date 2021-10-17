@@ -12,7 +12,11 @@
 
 <p>
   <strong>Foi feita:</strong>
-  <%= @task.status %>
+  <%= if @task.status 
+        'SIM' 
+      else 
+        'NÃO' 
+      end%>
 </p>
 
 <p>
